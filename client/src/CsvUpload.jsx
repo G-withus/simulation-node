@@ -55,10 +55,17 @@ function CsvUploader() {
         });
     };
 
-    // Transfer CSV rows as XML to the backend
+    // Transfer CSV rows as XML to the backend with a delay
     const transferRows = async (rows) => {
         for (let i = 0; i < rows.length; i++) {
             const xml = `<row><data>${rows[i].join(',')}</data></row>`;
+            
+            // Create a delay function
+            const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+            
+            // Delay for 5 seconds (5000 milliseconds)
+            await delay(5000);
+            
             try {
                 const response = await axios.post(`http://localhost:${serverPort}/receive-xml`, { xml });
                 const message = response.data.message || 'Row transferred successfully';
@@ -111,11 +118,15 @@ function CsvUploader() {
             )}
 
             <div className="status-box">
-                {rowCount > 0 && <p>File Count: {rowCount}</p>}
+                {rowCount > 0 && (
+                    <p>
+                        File Count: {rowCount} 
+                        {fileCount > 0 && <> | Server Received Count: {fileCount}</>}
+                    </p>
+                )}
                 {transferStatus.map((status, index) => (
                     <p key={index}>{status}</p>
                 ))}
-                {fileCount > 0 && <p>Server File Count: {fileCount}</p>}
             </div>
         </div>
     );
