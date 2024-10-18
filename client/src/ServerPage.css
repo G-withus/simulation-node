@@ -1,30 +1,70 @@
 .serverpage-container {
-    width: 500px;
-    margin: 20px auto;
     padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    background-color: #282828;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    max-width: 500px;
+    margin: 0 auto;
 }
 
-.file-count {
-    margin: 20px 0;
+.client-section, .receive-section, .file-section {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
 }
 
-.error-message {
-    color: red;
+.client-section input, .receive-section input, .file-section input {
+    width: 70%;
+    padding: 5px;
+    background-color: #333;
+    border: none;
+    color: #fff;
 }
 
-.open-file-button {
-    padding: 10px 15px;
-    background-color: #007BFF;
+.disconnect-button, .open-button {
+    padding: 5px 10px;
+    background-color: #d9534f;
     color: white;
     border: none;
-    border-radius: 4px;
     cursor: pointer;
 }
 
-.open-file-button:hover {
-    background-color: #0056b3;
+.disconnect-button:hover, .open-button:hover {
+    background-color: #c9302c;
+}
+
+.log-section {
+    background-color: #333;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+
+.log-section h3 {
+    margin-top: 0;
+    border-bottom: 1px solid #555;
+    padding-bottom: 5px;
+}
+
+.log-messages {
+    height: 100px;
+    overflow-y: auto;
+    background-color: #222;
+    padding: 10px;
+    border: 1px solid #555;
+}
+
+.log-messages p {
+    margin: 5px 0;
+}
+
+.rx {
+    color: #5bc0de;
+}
+
+.tx {
+    color: #5cb85c;
+}
+
+.error-message {
+    color: #d9534f;
 }

@@ -100,3 +100,14 @@
 <row><data>99,Adc7ad9B6e4A1Fe,Summer,Oconnell,Female,alexiscantrell@example.org,001-273-685-6932x092,2012-04-12,Broadcast journalist</data></row>
 <row><data>100,b8D0aD3490FC7e1,Mariah,Bernard,Male,pcopeland@example.org,(341)594-6554x44657,2016-11-15,IT sales professional</data></row>
 <row><data></data></row>
+<row><data>Employment Status</data></row>
+<row><data>Employed full-time</data></row>
+<row><data>Employed part-time</data></row>
+<row><data>Self-employed</data></row>
+<row><data>Not employed and looking for work</data></row>
+<row><data>Not employed and not looking for work</data></row>
+<row><data>Homemaker</data></row>
+<row><data>Retired</data></row>
+<row><data>Student</data></row>
+<row><data>Prefer not to answer</data></row>
+<row><data></data></row>

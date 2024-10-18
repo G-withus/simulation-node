@@ -9,7 +9,8 @@ function CsvUploader() {
     const [isConnected, setIsConnected] = useState(false);
     const [transferStatus, setTransferStatus] = useState([]);
     const [rowCount, setRowCount] = useState(0);
-    const [fileCount, setFileCount] = useState(0); // State to store file count
+    const [fileCount, setFileCount] = useState(0);
+    const [error, setError] = useState('');
 
     // Handle file selection
     const handleFileUpload = (e) => {
@@ -20,15 +21,25 @@ function CsvUploader() {
     // Handle server port input
     const handlePortChange = (e) => {
         setServerPort(e.target.value);
+        setError('');
     };
 
     // Connect to the server
-    const handleConnect = () => {
-        if (serverPort === '8090') {
+    const handleConnect = async () => {
+        if (serverPort !== '8090') {
+            setIsConnected(false);
+            setError('Invalid server port. Please enter the correct port (8090).');
+            return;
+        }
+
+        try {
+            await axios.get(`http://localhost:${serverPort}/file-count`);
             setIsConnected(true);
+            setError('');
             alert('Connected to server!');
-        } else {
-            alert('Invalid server port. Please try again.');
+        } catch {
+            setIsConnected(false);
+            setError('Server is not running. Please start the server.');
         }
     };
 
@@ -47,12 +58,11 @@ function CsvUploader() {
     // Transfer CSV rows as XML to the backend
     const transferRows = async (rows) => {
         for (let i = 0; i < rows.length; i++) {
-            const xml = `<row><data>${rows[i].join(',')}</data></row>`; // Ensure correct formatting for CSV rows
+            const xml = `<row><data>${rows[i].join(',')}</data></row>`;
             try {
                 const response = await axios.post(`http://localhost:${serverPort}/receive-xml`, { xml });
-                // Correctly access the response message
-                const message = response.data.message || 'Row transferred successfully'; 
-                setTransferStatus(prev => [...prev, `Row ${i + 1} transferred: ${message}`]); 
+                const message = response.data.message || 'Row transferred successfully';
+                setTransferStatus(prev => [...prev, `Row ${i + 1} transferred: ${message}`]);
                 if (response.data.fileCount !== undefined) {
                     setFileCount(response.data.fileCount);
                 }
@@ -65,6 +75,7 @@ function CsvUploader() {
     return (
         <div className="csvuploader-container">
             <h2>Connect to Server</h2>
+            {error && <p className="error-message">{error}</p>}
             <div className="connection-box">
                 <input
                     type="text"
@@ -101,10 +112,10 @@ function CsvUploader() {
 
             <div className="status-box">
                 {rowCount > 0 && <p>File Count: {rowCount}</p>}
-                {/* {fileCount > 0 && <p>File Count in receive.txt: {fileCount}</p>} */}
                 {transferStatus.map((status, index) => (
                     <p key={index}>{status}</p>
                 ))}
+                {fileCount > 0 && <p>Server File Count: {fileCount}</p>}
             </div>
         </div>
     );
