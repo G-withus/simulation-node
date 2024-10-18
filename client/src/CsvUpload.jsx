@@ -92,7 +92,7 @@ function CsvUploader() {
                     className="input-field"
                 />
                 <button onClick={handleConnect} className="connect-button">
-                    Connect
+                    {isConnected ? 'Connected':'Connect'}
                 </button>
             </div>
 
